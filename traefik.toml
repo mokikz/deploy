@@ -1,22 +1,39 @@
+logLevel = "INFO"
 defaultEntryPoints = ["http", "https"]
+
+[traefikLog]
+filepath = "/var/log/traefik/traefik.log"
+
 [web]
 address = ":8080"
-  [web.auth.basic]
-  users = ["admin:$apr1$mQWcgmLG$iaw/u7NY1fEjijx0yCrT.."]
-  # admin:$apr1$mQWcgmLG$iaw/u7NY1fEjijx0yCrT..
+
+[web.auth.basic]
+users = ["admin:$apr1$mQWcgmLG$iaw/u7NY1fEjijx0yCrT.."]
+# admin:$apr1$mQWcgmLG$iaw/u7NY1fEjijx0yCrT..
 
 [entryPoints]
-  [entryPoints.http]
-  address = ":80"
-    [entryPoints.http.redirect]
-      entryPoint = "https"
-  [entryPoints.https]
-  address = ":443"
-    [entryPoints.https.tls]
+[entryPoints.http]
+address = ":80"
+
+[entryPoints.http.redirect]
+entryPoint = "https"
+
+[entryPoints.https]
+address = ":443"
+
+[entryPoints.https.redirect]
+regex = "^https://blog.mokikz.de(.*)"
+replacement = "https://mokikz.jimdo.com$1"
+
+[entryPoints.https.tls]
 
 [acme]
-    email = "mokikz@web.de"
-    storage = "acme.json"
-    entryPoint = "https"
-    onHostRule = true
-    onDemand = false
+email = "mokikz@web.de"
+storage = "acme.json"
+entryPoint = "https"
+onHostRule = true
+onDemand = false
+
+[[acme.domains]]
+main = "mokikz.de"
+sans = ["www.mokikz.de", "blog.mokikz.de", "lerndieuhr.mokikz.de"]
