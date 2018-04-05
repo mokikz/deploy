@@ -1,22 +1,36 @@
-logLevel = "INFO"
+logLevel = "DEBUG"
 defaultEntryPoints = ["http", "https"]
-
-[traefikLog]
-filepath = "/var/log/traefik/traefik.log"
 
 [web]
 address = ":8080"
 
-[web.auth.basic]
-users = ["admin:$apr1$mQWcgmLG$iaw/u7NY1fEjijx0yCrT.."]
+#[web.auth.basic]
+#users = ["admin:$apr1$mQWcgmLG$iaw/u7NY1fEjijx0yCrT.."]
 # admin:$apr1$mQWcgmLG$iaw/u7NY1fEjijx0yCrT..
+
+[docker]
+domain = "mokikz.de"
+watch = true
+
+[acme]
+email = "mokikz@web.de"
+storage = "/storage/acme.json"
+entryPoint = "https"
+# caServer = "https://acme-staging.api.letsencrypt.org/directory"
+
+[acme.httpchallenge]
+entrypoint="http"
+
+[[acme.domains]]
+main = "mokikz.de"
+sans = ["lerndieuhr.mokikz.de", "portainer.mokikz.de", "www.mokikz.de", "blog.mokikz.de" ]
 
 [entryPoints]
 [entryPoints.http]
 address = ":80"
 
-[entryPoints.http.redirect]
-entryPoint = "https"
+# [entryPoints.http.redirect]
+# entryPoint = "https"
 
 [entryPoints.https]
 address = ":443"
@@ -26,14 +40,3 @@ regex = "^https://blog.mokikz.de(.*)"
 replacement = "https://mokikz.jimdo.com$1"
 
 [entryPoints.https.tls]
-
-[acme]
-email = "mokikz@web.de"
-storage = "acme.json"
-entryPoint = "https"
-onHostRule = true
-onDemand = false
-
-[[acme.domains]]
-main = "mokikz.de"
-sans = ["www.mokikz.de", "blog.mokikz.de", "lerndieuhr.mokikz.de"]
