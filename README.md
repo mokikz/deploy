@@ -10,6 +10,13 @@ docker-machine create -d generic --generic-ip-address 51.144.1.237 --generic-ssh
 
 ```
 eval $(docker-machine azure)
+docker version
+```
+
+## Create a swarm
+
+```
+docker swarm init
 ```
 
 ## Adjust GoDaddy DNS
@@ -30,4 +37,3 @@ open https://portainer.mokikz.de
 open https://lerndieuhr.mokikz.de
 open https://blog.mokikz.de
 ```
-
