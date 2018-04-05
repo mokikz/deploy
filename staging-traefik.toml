@@ -1,0 +1,42 @@
+logLevel = "DEBUG"
+defaultEntryPoints = ["http", "https"]
+
+[web]
+address = ":8080"
+
+#[web.auth.basic]
+#users = ["admin:$apr1$mQWcgmLG$iaw/u7NY1fEjijx0yCrT.."]
+# admin:$apr1$mQWcgmLG$iaw/u7NY1fEjijx0yCrT..
+
+[docker]
+domain = "mokikz.de"
+watch = true
+
+[acme]
+email = "mokikz@web.de"
+storage = "/storage/acme.json"
+entryPoint = "https"
+caServer = "https://acme-staging.api.letsencrypt.org/directory"
+
+[acme.httpchallenge]
+entrypoint="http"
+
+[[acme.domains]]
+main = "mokikz.local"
+sans = ["lerndieuhr.mokikz.local", "portainer.mokikz.local", "www.mokikz.local", "blog.mokikz.local" ]
+
+[entryPoints]
+[entryPoints.http]
+address = ":80"
+
+# [entryPoints.http.redirect]
+# entryPoint = "https"
+
+[entryPoints.https]
+address = ":443"
+
+[entryPoints.https.redirect]
+regex = "^https://blog.mokikz.local(.*)"
+replacement = "https://mokikz.jimdo.com$1"
+
+[entryPoints.https.tls]
