@@ -9,7 +9,7 @@ docker-machine create -d generic --generic-ip-address 51.144.1.237 --generic-ssh
 ```
 
 ```
-eval $(docker-machine azure)
+eval $(docker-machine env azure)
 docker version
 ```
 
